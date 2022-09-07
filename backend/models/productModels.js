@@ -1,0 +1,59 @@
+const mongoose = require("mongoose");
+
+const productCollection = "product"; // collection name
+
+const productSchema = new mongoose.Schema({
+  title: {
+    type: "string",
+    required: [true, "Please enter product name"],
+    max: 100,
+  },
+  desc: {
+    type: "string",
+    required: [true, "Please enter product description"],
+    max: 1000,
+  },
+  img: {
+    public_id: {
+      type: 'string',
+    },
+    secure_url: {
+      type: 'string',
+    }
+  },
+  price: {
+    type: Number,
+    required: [true, "Please enter product price"],
+  },
+  category: {
+    type: "string",
+    required: [true, "Please enter product category"],
+  },
+  stock: {
+    type: Number,
+    required: [true, "Please enter product stock"],
+    default: 1,
+  },
+  status: {
+    type: "boolean",
+    required: true,
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  createdaAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  isDeleted: {
+    type: "boolean",
+  },
+});
+
+module.exports.productModel = mongoose.model(productCollection, productSchema);
